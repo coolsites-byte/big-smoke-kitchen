@@ -1,0 +1,523 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Big Smoke Kitchen</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a dark, smoky poster. A live smoke canvas sits behind everything. One centered column holds the wordmark and status, the headline, a promise line and two contact chips. A slow marquee and a one-line footer close the page. Boldness lives in one place: the ember-lit word "smoking". */
+:root {
+  color-scheme: dark;
+  --bg: #0B0A09;
+  --surface: rgba(255, 244, 230, 0.04);
+  --fg: #F0EADF;
+  --muted: #BDB5A8;
+  --line: rgba(240, 234, 223, 0.17);
+  --ember: #FF5A1F;
+  --ember-soft: #FF9A5C;
+  --ember-pale: #FFD9B8;
+
+  --font-display: "Instrument Serif", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--ember); color: #1B0A04; }
+:focus-visible { outline: 2px solid var(--ember-soft); outline-offset: 3px; }
+
+/* backdrop: static fallback first, live smoke canvas on top */
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(70% 55% at 50% 110%, rgba(255, 90, 31, 0.32), transparent 70%),
+    radial-gradient(90% 60% at 12% -10%, rgba(240, 234, 223, 0.08), transparent 62%),
+    var(--bg);
+}
+#smoke { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.3;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* frame */
+.stage {
+  position: relative;
+  z-index: 1;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-block: clamp(14px, 2.4vw, 28px);
+}
+.row {
+  width: 100%;
+  max-width: 84rem;
+  margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* top bar */
+.top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; }
+.brand { font-family: var(--font-display); font-size: 1.5rem; line-height: 1; }
+.status {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ember); animation: ping 2.4s ease-out infinite; }
+@keyframes ping {
+  0% { box-shadow: 0 0 0 0 rgba(255, 90, 31, 0.55); }
+  70%, 100% { box-shadow: 0 0 0 9px rgba(255, 90, 31, 0); }
+}
+
+/* hero */
+main.row {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: clamp(16px, 2.6vw, 26px);
+  padding-block: clamp(16px, min(4vw, 5vh), 56px);
+}
+h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(3.25rem, min(12.5vw, 15vh), 8.25rem);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  text-rendering: optimizeLegibility;
+}
+.w { display: inline-block; }
+.hot {
+  font-style: italic;
+  padding: 0.14em 0.1em;
+  margin: -0.14em -0.1em;
+  background: linear-gradient(180deg, var(--ember-pale) 6%, var(--ember-soft) 48%, var(--ember) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter: blur(0) drop-shadow(0 0 28px rgba(255, 90, 31, 0.38));
+}
+.promise {
+  margin: 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.6rem, 3.6vw, 2.5rem);
+  line-height: 1.1;
+}
+.what { margin: 0; max-width: 34rem; color: var(--muted); font-size: clamp(1rem, 1.6vw, 1.125rem); text-wrap: pretty; }
+
+/* contact chips */
+.find { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: clamp(8px, 2vw, 20px); }
+.chip-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 20px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  color: var(--fg);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+a.chip-link:hover, .chip-link:focus-within { border-color: rgba(255, 90, 31, 0.65); background: rgba(255, 90, 31, 0.08); }
+.chip-link .k { font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.chip-link .v { color: inherit; text-decoration: none; margin-right: auto; overflow-wrap: anywhere; }
+a.v:hover { text-decoration: underline; text-decoration-color: var(--ember-soft); text-underline-offset: 4px; }
+.chip-link .arrow { flex: none; color: var(--ember-soft); transition: transform 0.2s ease; }
+a.chip-link:hover .arrow { transform: translate(2px, -2px); }
+.copy {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ember-soft);
+  background: none;
+  border: 0;
+  border-left: 1px solid var(--line);
+  padding: 0 0 0 12px;
+  height: 22px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.copy:hover { color: var(--ember-pale); }
+.sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* marquee */
+.marquee {
+  position: relative;
+  overflow: hidden;
+  border-block: 1px solid var(--line);
+  padding-block: clamp(8px, 1.4vw, 16px);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+.track { display: flex; width: max-content; animation: scroll 80s linear infinite; }
+.group { display: flex; align-items: center; flex: none; }
+.group span {
+  padding-inline: clamp(16px, 2.4vw, 36px);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(2.25rem, min(6vw, 9vh), 4.75rem);
+  line-height: 1.05;
+  white-space: nowrap;
+  color: var(--fg);
+}
+.group span.out { color: transparent; -webkit-text-stroke: 1px rgba(240, 234, 223, 0.7); }
+.spark {
+  flex: none;
+  width: clamp(16px, 2.4vw, 30px);
+  height: clamp(16px, 2.4vw, 30px);
+  background: var(--ember);
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+}
+@keyframes scroll { to { transform: translateX(-50%); } }
+
+/* footer */
+footer.row {
+  display: flex;
+  justify-content: center;
+  padding-block: 18px 6px;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* entrance: the smoke clears and the words come through */
+@keyframes clear {
+  from { opacity: 0.15; filter: blur(14px); transform: translateY(0.18em); }
+  to { opacity: 1; filter: blur(0); transform: none; }
+}
+@keyframes clear-hot {
+  from { opacity: 0.15; filter: blur(14px) drop-shadow(0 0 0 rgba(255, 90, 31, 0)); transform: translateY(0.18em); }
+  to { opacity: 1; filter: blur(0) drop-shadow(0 0 28px rgba(255, 90, 31, 0.38)); transform: none; }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .w { animation: clear 1.5s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--i) * 120ms + 120ms); }
+  .w.hot { animation-name: clear-hot; }
+  .fade { animation: rise 1s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: var(--d, 0s); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dot, .track { animation: none; }
+  .chip-link, .chip-link .arrow { transition: none; }
+}
+
+@media (max-width: 640px) {
+  .top { justify-content: center; }
+  .find { flex-direction: column; align-items: stretch; width: 100%; max-width: 22rem; }
+  .chip-link { justify-content: space-between; }
+}
+</style>
+
+<div class="bg" aria-hidden="true"><canvas id="smoke"></canvas></div>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="stage">
+  <header class="top row">
+    <span class="brand">Big Smoke Kitchen</span>
+    <p class="status fade"><span class="dot" aria-hidden="true"></span><span id="status-text">Coming soon</span></p>
+  </header>
+
+  <main class="row">
+    <h1 id="headline">
+      <span class="w" style="--i:0">Something&rsquo;s</span>
+      <span class="w hot" style="--i:1">smoking</span>
+      <span class="w" style="--i:2">in</span>
+      <span class="w" style="--i:3">the</span>
+      <span class="w" style="--i:4">kitchen.</span>
+    </h1>
+    <p class="promise fade" style="--d:0.9s">We&rsquo;re making something amazing.</p>
+    <p class="what fade" style="--d:1.05s">Big Smoke Kitchen is a food store for people who like nice food. The doors open soon.</p>
+
+    <div class="find fade" style="--d:1.2s">
+      <a class="chip-link" href="https://www.tiktok.com/@big.smoke.kitchen" target="_blank" rel="noopener">
+        <span class="k">TikTok</span>
+        <span class="v">@big.smoke.kitchen</span>
+        <svg class="arrow" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M3 9L9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <div class="chip-link">
+        <span class="k">Email</span>
+        <a class="v" id="mail" href="mailto:info@bsk-ltd.com">info@bsk-ltd.com</a>
+        <button class="copy" id="copy-mail" type="button" aria-label="Copy email address">Copy</button>
+      </div>
+      <span class="sr" id="copy-status" role="status"></span>
+    </div>
+  </main>
+
+  <div class="marquee" aria-hidden="true"><div class="track" id="track"></div></div>
+
+  <footer class="row"><span>&copy; 2026 Big Smoke Kitchen</span></footer>
+</div>
+
+<script>
+(function () {
+  /* Set launchDate (ISO format) to turn the status chip into a live countdown, e.g. "2027-01-15T10:00:00Z". */
+  var CONFIG = { launchDate: "" };
+
+  /* ---- status chip / optional countdown ---- */
+  var statusText = document.getElementById("status-text");
+  var target = CONFIG.launchDate ? new Date(CONFIG.launchDate).getTime() : NaN;
+  function pad(n) { return n < 10 ? "0" + n : "" + n; }
+  function tick() {
+    var ms = target - Date.now();
+    if (ms <= 0) { statusText.textContent = "Opening any minute"; return; }
+    var mins = Math.floor(ms / 60000);
+    var d = Math.floor(mins / 1440);
+    var h = Math.floor((mins % 1440) / 60);
+    var m = mins % 60;
+    statusText.textContent = "Doors open in " + d + "d " + pad(h) + "h " + pad(m) + "m";
+  }
+  if (!isNaN(target)) { tick(); setInterval(tick, 30000); }
+
+  /* ---- copy email ---- */
+  var copyBtn = document.getElementById("copy-mail");
+  var mail = document.getElementById("mail");
+  var copyStatus = document.getElementById("copy-status");
+  var copyLabel = copyBtn.textContent;
+  var copyTimer;
+  function flash(text) {
+    copyBtn.textContent = text;
+    copyStatus.textContent = text;
+    clearTimeout(copyTimer);
+    copyTimer = setTimeout(function () { copyBtn.textContent = copyLabel; }, 1800);
+  }
+  copyBtn.addEventListener("click", function () {
+    function fallback() {
+      var range = document.createRange();
+      range.selectNodeContents(mail);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      flash("Press Ctrl+C");
+    }
+    try {
+      navigator.clipboard.writeText(mail.textContent.trim()).then(function () { flash("Copied"); }, fallback);
+    } catch (err) { fallback(); }
+  });
+
+  /* ---- marquee ---- */
+  var phrases = ["Coming soon", "Something amazing", "Nice food", "Big Smoke Kitchen"];
+  var track = document.getElementById("track");
+  function makeGroup() {
+    var g = document.createElement("div");
+    g.className = "group";
+    for (var r = 0; r < 3; r++) {
+      phrases.forEach(function (text, i) {
+        var s = document.createElement("span");
+        s.textContent = text;
+        if (i >= 2) s.className = "out";
+        g.appendChild(s);
+        var sp = document.createElement("i");
+        sp.className = "spark";
+        g.appendChild(sp);
+      });
+    }
+    return g;
+  }
+  track.appendChild(makeGroup());
+  track.appendChild(makeGroup());
+
+  /* ---- smoke (WebGL). If anything fails, the static gradient behind it stays. ---- */
+  var canvas = document.getElementById("smoke");
+  var gl = null;
+  try {
+    gl = canvas.getContext("webgl", { antialias: false, depth: false, stencil: false, powerPreference: "low-power" }) ||
+         canvas.getContext("experimental-webgl");
+  } catch (e) { gl = null; }
+  if (!gl) return;
+
+  var VS = "attribute vec2 a; void main() { gl_Position = vec4(a, 0.0, 1.0); }";
+  var FS = `
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#else
+precision mediump float;
+#endif
+uniform vec2 u_res;
+uniform float u_time;
+uniform vec2 u_mouse;
+
+float hash(vec2 p) {
+  p = fract(p * vec2(123.34, 456.21));
+  p += dot(p, p + 45.32);
+  return fract(p.x * p.y);
+}
+float noise(vec2 p) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  f = f * f * (3.0 - 2.0 * f);
+  float a = hash(i);
+  float b = hash(i + vec2(1.0, 0.0));
+  float c = hash(i + vec2(0.0, 1.0));
+  float d = hash(i + vec2(1.0, 1.0));
+  return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+}
+float fbm(vec2 p) {
+  float v = 0.0;
+  float a = 0.5;
+  mat2 m = mat2(1.6, 1.2, -1.2, 1.6);
+  for (int i = 0; i < 5; i++) {
+    v += a * noise(p);
+    p = m * p;
+    a *= 0.5;
+  }
+  return v;
+}
+void main() {
+  vec2 uv = gl_FragCoord.xy / u_res;
+  float aspect = u_res.x / u_res.y;
+  vec2 p = vec2((uv.x - 0.5) * aspect, uv.y);
+  float t = u_time;
+
+  vec2 q = p * 1.5 + vec2(u_mouse.x * 0.3, 0.0);
+  q.y -= t * 0.055;
+  vec2 w = vec2(fbm(q + vec2(0.0, 1.7)), fbm(q + vec2(5.2, 1.3) + t * 0.01));
+  float s = fbm(q * 1.15 + 1.8 * w + vec2(t * 0.012, 0.0));
+  float dens = smoothstep(0.32, 0.92, s);
+
+  float rise = pow(1.0 - clamp(uv.y, 0.0, 1.0), 1.7);
+  float d = dens * (0.30 + 0.70 * rise);
+
+  float glow = exp(-pow(uv.y * 1.8 + 0.0001, 1.4));
+  float flick = 0.86 + 0.14 * noise(vec2(t * 0.7, p.x * 3.0));
+
+  vec3 bg = vec3(0.043, 0.039, 0.035);
+  vec3 smokeCol = vec3(0.80, 0.76, 0.70);
+  vec3 ember = vec3(1.0, 0.34, 0.12);
+
+  vec3 col = bg + ember * glow * 0.20 * flick;
+  col = mix(col, smokeCol * (0.46 + 0.7 * glow), d * 0.40);
+  col += ember * glow * d * 0.20 * flick;
+
+  float vig = 1.0 - smoothstep(0.35, 1.35, length((uv - vec2(0.5, 0.42)) * vec2(aspect * 0.8, 1.0)));
+  col *= 0.58 + 0.42 * vig;
+  col += (hash(gl_FragCoord.xy + fract(t)) - 0.5) / 255.0;
+  gl_FragColor = vec4(col, 1.0);
+}
+`;
+
+  function compile(type, src) {
+    var sh = gl.createShader(type);
+    gl.shaderSource(sh, src);
+    gl.compileShader(sh);
+    if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) { console.warn(gl.getShaderInfoLog(sh)); return null; }
+    return sh;
+  }
+  var vs = compile(gl.VERTEX_SHADER, VS);
+  var fs = compile(gl.FRAGMENT_SHADER, FS);
+  if (!vs || !fs) return;
+  var prog = gl.createProgram();
+  gl.attachShader(prog, vs);
+  gl.attachShader(prog, fs);
+  gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { console.warn(gl.getProgramInfoLog(prog)); return; }
+  gl.useProgram(prog);
+
+  var buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+  var loc = gl.getAttribLocation(prog, "a");
+  gl.enableVertexAttribArray(loc);
+  gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  var uRes = gl.getUniformLocation(prog, "u_res");
+  var uTime = gl.getUniformLocation(prog, "u_time");
+  var uMouse = gl.getUniformLocation(prog, "u_mouse");
+
+  function size() {
+    var cw = canvas.clientWidth || window.innerWidth;
+    var ch = canvas.clientHeight || window.innerHeight;
+    var k = Math.min(0.5, Math.sqrt(550000 / (cw * ch)));
+    var w = Math.max(2, Math.round(cw * k));
+    var h = Math.max(2, Math.round(ch * k));
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width = w;
+      canvas.height = h;
+      gl.viewport(0, 0, w, h);
+    }
+    gl.uniform2f(uRes, canvas.width, canvas.height);
+  }
+
+  var mx = 0, my = 0, tx = 0, ty = 0;
+  window.addEventListener("pointermove", function (e) {
+    tx = e.clientX / window.innerWidth - 0.5;
+    ty = 0.5 - e.clientY / window.innerHeight;
+  }, { passive: true });
+
+  var start = performance.now();
+  function draw(now) {
+    gl.uniform1f(uTime, 14 + (now - start) / 1000);
+    gl.uniform2f(uMouse, mx, my);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+  }
+
+  size();
+  var still = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (still) {
+    draw(start);
+    window.addEventListener("resize", function () { size(); draw(start); });
+    return;
+  }
+
+  var last = 0;
+  function loop(now) {
+    requestAnimationFrame(loop);
+    if (now - last < 32) return;
+    last = now;
+    mx += (tx - mx) * 0.05;
+    my += (ty - my) * 0.05;
+    draw(now);
+  }
+  window.addEventListener("resize", size);
+  requestAnimationFrame(loop);
+})();
+</script>
+
+</body></html>
